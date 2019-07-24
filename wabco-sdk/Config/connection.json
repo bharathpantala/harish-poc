@@ -1,0 +1,89 @@
+{
+    "name": "mtest-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Wabco",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "tmcwabcochannel": {
+            "orderers": [
+                "orderer.wabco.com"
+            ],
+            "peers": {
+                "peer0.wabco.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Wabco": {
+            "mspid": "WabcoMSP",
+            "peers": [
+                "peer0.wabco.com"
+            ],
+            "certificateAuthorities": [
+                "ca.wabco.com"
+            ],
+            "adminPrivateKey": {
+                "path": "../crypto-config/peerOrganizations/wabco.com/users/Admin@wabco.com/msp/keystore/8a75fc04e62eec8a4df89c502e61db973d9d7a1d920d37c3705959e16709375d_sk"
+            },
+            "signedCert": {
+                "path": "../crypto-config/peerOrganizations/wabco.com/users/Admin@wabco.com/msp/signcerts/Admin@wabco.com-cert.pem"
+            }
+        }
+    },
+    "orderers": {
+        "orderer.wabco.com": {
+            "url": "grpcs://localhost:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.wabco.com",
+                "grpc.keepalive_timeout_ms": 15
+            },
+            "tlsCACerts": {
+                "path": "../crypto-config/ordererOrganizations/wabco.com/orderers/orderer.wabco.com/msp/tlscacerts/tlsca.wabco.com-cert.pem"
+            }
+        }
+    },
+    "peers": {
+        "peer0.wabco.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "path": "../crypto-config/peerOrganizations/wabco.com/tlsca/tlsca.wabco.com-cert.pem"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.wabco.com",
+                "grpc.keepalive_timeout_ms": 20000
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.wabco.com": {
+            "url": "http://localhost:7054",
+            "caName": "ca.wabco.com",
+            "httpOptions": {
+                "verify": false
+            },
+            "tlsCACerts": {
+                "path": "../crypto-config/peerOrganizations/wabco.com/ca/ca.wabco.com-cert.pem"
+            },
+            "registrar": [
+                {
+                    "enrollId": "admin",
+                    "enrollSecret": "adminpw"
+                }
+            ]
+        }
+    }
+}
